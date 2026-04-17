@@ -1,0 +1,245 @@
+---
+import { getLang, useTranslations } from '../i18n/utils';
+
+const lang = getLang(Astro.url);
+const t = useTranslations(lang);
+---
+
+<form id="contact-form" class="contact-form" novalidate>
+  <div class="form-group">
+    <label for="name">{t('contact.name')}</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder={t('contact.name.placeholder')}
+      autocomplete="name"
+      required
+    />
+    <span class="field-error" data-error="name"></span>
+  </div>
+
+  <div class="form-group">
+    <label for="email">{t('contact.email')}</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      placeholder={t('contact.email.placeholder')}
+      autocomplete="email"
+      required
+    />
+    <span class="field-error" data-error="email"></span>
+  </div>
+
+  <div class="form-group">
+    <label for="message">{t('contact.message')}</label>
+    <textarea
+      id="message"
+      name="message"
+      rows="6"
+      placeholder={t('contact.message.placeholder')}
+      required
+    ></textarea>
+    <span class="field-error" data-error="message"></span>
+  </div>
+
+  <button type="submit" class="btn-primary submit-btn" id="submit-btn">
+    <span class="btn-label">{t('contact.send')}</span>
+    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+  </button>
+
+  <div id="form-feedback" class="form-feedback hidden" role="alert" aria-live="polite"></div>
+</form>
+
+<script define:vars={{ msgRequired: t('contact.required'), msgEmailInvalid: t('contact.email.invalid'), msgSuccess: t('contact.success'), msgError: t('contact.error') }}>
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const feedback = document.getElementById('form-feedback');
+
+  function showError(field, msg) {
+    const errEl = form.querySelector(`[data-error="${field}"]`);
+    const input = form.querySelector(`[name="${field}"]`);
+    if (errEl) errEl.textContent = msg;
+    if (input) input.classList.add('invalid');
+  }
+
+  function clearErrors() {
+    form.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+    form.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+  }
+
+  function validateForm(data) {
+    let valid = true;
+    if (!data.get('name')?.toString().trim()) {
+      showError('name', msgRequired);
+      valid = false;
+    }
+    const email = data.get('email')?.toString().trim() ?? '';
+    if (!email) {
+      showError('email', msgRequired);
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError('email', msgEmailInvalid);
+      valid = false;
+    }
+    if (!data.get('message')?.toString().trim()) {
+      showError('message', msgRequired);
+      valid = false;
+    }
+    return valid;
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearErrors();
+    feedback?.classList.add('hidden');
+
+    const data = new FormData(form);
+    if (!validateForm(data)) return;
+
+    submitBtn?.setAttribute('disabled', 'true');
+    submitBtn?.classList.add('loading');
+
+    try {
+      // TODO: replace with real API endpoint
+      // const res = await fetch('/api/contact', { method: 'POST', body: data });
+      // if (!res.ok) throw new Error();
+      await new Promise(r => setTimeout(r, 800)); // Simulate async — remove when wiring backend
+
+      form.reset();
+      if (feedback) {
+        feedback.textContent = msgSuccess;
+        feedback.className = 'form-feedback success';
+      }
+    } catch {
+      if (feedback) {
+        feedback.textContent = msgError;
+        feedback.className = 'form-feedback error';
+      }
+    } finally {
+      submitBtn?.removeAttribute('disabled');
+      submitBtn?.classList.remove('loading');
+    }
+  });
+
+  // Clear per-field error on input
+  form?.querySelectorAll('input, textarea').forEach(input => {
+    input.addEventListener('input', () => {
+      const name = input.getAttribute('name');
+      if (name) {
+        const errEl = form.querySelector(`[data-error="${name}"]`);
+        if (errEl) errEl.textContent = '';
+        input.classList.remove('invalid');
+      }
+    });
+  });
+</script>
+
+<style>
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--color-bg-soft);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    outline: none;
+    resize: vertical;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-text-mute);
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: var(--accent-start);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+  }
+
+  input.invalid,
+  textarea.invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+  }
+
+  .field-error {
+    font-size: 0.78rem;
+    color: #ef4444;
+    min-height: 1em;
+  }
+
+  .submit-btn {
+    align-self: flex-start;
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  .submit-btn.loading .btn-icon {
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .form-feedback {
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .form-feedback.success {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #16a34a;
+  }
+
+  .dark .form-feedback.success {
+    color: #4ade80;
+  }
+
+  .form-feedback.error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #dc2626;
+  }
+
+  .dark .form-feedback.error {
+    color: #f87171;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+</style>

@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  --color-bg: #ffffff;
+  --color-bg-soft: #f6f6f7;
+  --color-bg-mute: #ebebef;
+  --color-text: #1a1a2e;
+  --color-text-soft: #52525b;
+  --color-text-mute: #71717a;
+  --color-border: #e4e4e7;
+  --color-card-bg: #ffffff;
+  --color-card-border: #e4e4e7;
+
+  --accent-start: #7c3aed;
+  --accent-end: #3b82f6;
+  --accent-mid: #6366f1;
+
+  --radius: 0.75rem;
+  --transition: 200ms ease;
+}
+
+.dark {
+  --color-bg: #0f0f11;
+  --color-bg-soft: #161618;
+  --color-bg-mute: #1e1e22;
+  --color-text: #ebebef;
+  --color-text-soft: #a1a1aa;
+  --color-text-mute: #71717a;
+  --color-border: #27272a;
+  --color-card-bg: #161618;
+  --color-card-border: #27272a;
+}
+
+/* ─── Base ──────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+/* ─── Gradient text utility ─────────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Gradient button ───────────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+  color: #ffffff !important;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition:
+    opacity var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+  box-shadow: 0 0 0 0 rgba(124, 58, 237, 0);
+}
+
+.btn-primary:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+}
+
+/* ─── Ghost button ──────────────────────────────────────────────────────── */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  color: var(--color-text);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+}
+
+.btn-ghost:hover {
+  background: var(--color-bg-mute);
+  border-color: var(--accent-mid);
+  transform: translateY(-1px);
+}
+
+/* ─── Section spacing ───────────────────────────────────────────────────── */
+.section {
+  padding: 5rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 7rem 2rem;
+  }
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ─── Card ──────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  transition:
+    transform var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-mid);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.12);
+}
+
+/* ─── Focus ring ────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent-start);
+  outline-offset: 3px;
+}

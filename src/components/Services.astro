@@ -1,0 +1,160 @@
+---
+import { getLang, useTranslations } from '../i18n/utils';
+
+const lang = getLang(Astro.url);
+const t = useTranslations(lang);
+
+const services = [
+  {
+    key: 'custom',
+    featured: true,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  },
+  {
+    key: 'apps',
+    featured: false,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  },
+  {
+    key: 'ecom',
+    featured: false,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`,
+  },
+  {
+    key: 'wp',
+    featured: false,
+    secondary: true,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  },
+];
+---
+
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">{t('services.title')}</h2>
+      <p class="section-sub">{t('services.sub')}</p>
+    </div>
+
+    <div class="services-grid">
+      {services.map((s) => (
+        <div class:list={['card service-card', { featured: s.featured, secondary: s.secondary }]}>
+          {s.featured && (
+            <span class="badge">{t('services.custom.badge')}</span>
+          )}
+          <div class="service-icon" set:html={s.icon} />
+          <h3 class="service-title">{t(`services.${s.key}.title` as any)}</h3>
+          <p class="service-desc">{t(`services.${s.key}.desc` as any)}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.6rem, 4vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--color-text-soft);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .service-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .service-card.featured {
+    border-color: var(--accent-start);
+    background: linear-gradient(160deg, rgba(124, 58, 237, 0.06) 0%, var(--color-card-bg) 60%);
+    box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.2), 0 8px 32px rgba(124, 58, 237, 0.08);
+  }
+
+  .service-card.secondary {
+    opacity: 0.75;
+  }
+
+  .service-card.secondary:hover {
+    opacity: 1;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 2rem;
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+
+  .service-icon {
+    color: var(--accent-mid);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .service-card.featured .service-icon {
+    background: rgba(124, 58, 237, 0.15);
+    color: var(--accent-start);
+  }
+
+  .service-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.35;
+  }
+
+  .service-desc {
+    font-size: 0.875rem;
+    color: var(--color-text-soft);
+    line-height: 1.65;
+    flex: 1;
+  }
+</style>

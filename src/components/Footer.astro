@@ -1,0 +1,116 @@
+---
+import { getLang, useTranslations, getLocalePath } from '../i18n/utils';
+
+const lang = getLang(Astro.url);
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href={getLocalePath(lang)} class="footer-logo">
+        <span aria-hidden="true">⬡</span>
+        dzf <span class="soft">soft</span>
+      </a>
+      <p class="footer-tagline">{t('footer.tagline')}</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href={getLocalePath(lang)}>{t('nav.home')}</a>
+      <a href={`${getLocalePath(lang)}#services`}>{t('nav.services')}</a>
+      <a href={`${getLocalePath(lang)}#about`}>{t('nav.about')}</a>
+      <a href={getLocalePath(lang, 'contact')}>{t('nav.contact')}</a>
+    </nav>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; {year} dzf soft. {t('footer.rights')}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: auto;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg-soft);
+    padding: 2.5rem 1.5rem 1.25rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 640px) {
+    .footer-inner {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .footer-logo {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.35rem;
+    text-decoration: none;
+    transition: opacity var(--transition);
+  }
+
+  .footer-logo:hover {
+    opacity: 0.8;
+  }
+
+  .footer-logo span[aria-hidden] {
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .soft {
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-tagline {
+    font-size: 0.85rem;
+    color: var(--color-text-mute);
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+  }
+
+  .footer-nav a {
+    font-size: 0.875rem;
+    color: var(--color-text-soft);
+    transition: color var(--transition);
+  }
+
+  .footer-nav a:hover {
+    color: var(--color-text);
+  }
+
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 1.5rem auto 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.8rem;
+    color: var(--color-text-mute);
+  }
+</style>
