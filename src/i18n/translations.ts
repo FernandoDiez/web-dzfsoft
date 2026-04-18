@@ -1,11 +1,13 @@
-export const languages = {
+import { defaultLocale, type Locale } from "./config";
+
+export const languages: Record<Locale, string> = {
   en: "English",
   es: "Español",
-} as const;
+};
 
-export type Lang = keyof typeof languages;
+export type Lang = Locale;
 
-export const defaultLang: Lang = "en";
+export const defaultLang: Lang = defaultLocale;
 
 export const ui = {
   en: {

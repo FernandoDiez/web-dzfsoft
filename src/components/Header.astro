@@ -1,14 +1,15 @@
 ---
 import { getLang, useTranslations, getLocalePath } from '../i18n/utils';
+import { locales } from '../i18n/config';
 import { languages, type Lang } from '../i18n/translations';
 
 const lang = getLang(Astro.url);
 const t = useTranslations(lang);
 
-// Build alternate language URL
-const altLang = (lang === 'en' ? 'es' : 'en') as Lang;
-const currentPath = Astro.url.pathname.replace(/^\/(en|es)/, '') || '/';
-const altHref = getLocalePath(altLang, currentPath);
+// Build locale-switch URLs while keeping the current path.
+const localePrefixPattern = new RegExp(`^\/(${locales.join('|')})(?=\/|$)`);
+const currentPath = Astro.url.pathname.replace(localePrefixPattern, '') || '/';
+const switchLocales = locales.filter((locale) => locale !== lang) as Lang[];
 ---
 
 <header class="site-header">
@@ -30,9 +31,13 @@ const altHref = getLocalePath(altLang, currentPath);
     <!-- Right controls -->
     <div class="header-controls">
       <!-- Language switcher -->
-      <a href={altHref} class="lang-switch" aria-label={`Switch to ${languages[altLang]}`}>
-        {altLang.toUpperCase()}
-      </a>
+      <div class="lang-switcher" aria-label="Language switcher">
+        {switchLocales.map((targetLang) => (
+          <a href={getLocalePath(targetLang, currentPath)} class="lang-switch" aria-label={`Switch to ${languages[targetLang]}`}>
+            {targetLang.toUpperCase()}
+          </a>
+        ))}
+      </div>
 
       <!-- Theme toggle -->
       <button id="theme-toggle" aria-label="Toggle dark/light mode" class="icon-btn">
@@ -212,6 +217,12 @@ const altHref = getLocalePath(altLang, currentPath);
     align-items: center;
     gap: 0.5rem;
     margin-left: auto;
+  }
+
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
   }
 
   .lang-switch {

@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import About from '../components/About.astro';
+import CTA from '../components/CTA.astro';
+import { getLang } from '../i18n/utils';
+import type { Lang } from '../i18n/translations';
+
+const lang = getLang(Astro.url);
+
+const metaByLang: Record<Lang, { title: string; description: string }> = {
+  en: {
+    title: 'Custom Web Development',
+    description:
+      'dzf soft — Custom web development, web apps, PWA, SaaS and e-commerce solutions for startups and businesses.',
+  },
+  es: {
+    title: 'Desarrollo Web a Medida',
+    description:
+      'dzf soft — Desarrollo web a medida, aplicaciones web, PWA, SaaS y soluciones de e-commerce para startups y empresas.',
+  },
+};
+
+const meta = metaByLang[lang];
+---
+
+<Layout title={meta.title} description={meta.description}>
+  <Hero />
+  <Services />
+  <About />
+  <CTA />
+</Layout>
