@@ -1,5 +1,5 @@
 ---
-import { getLang, useTranslations, getLocalePath } from '../i18n/utils';
+import { getLang, getPathWithoutLocale, useTranslations, getLocalePath } from '../i18n/utils';
 import { locales } from '../i18n/config';
 import { languages, type Lang } from '../i18n/translations';
 
@@ -7,9 +7,8 @@ const lang = getLang(Astro.url);
 const t = useTranslations(lang);
 
 // Build locale-switch URLs while keeping the current path.
-const localePrefixPattern = new RegExp(`^\/(${locales.join('|')})(?=\/|$)`);
-const currentPath = Astro.url.pathname.replace(localePrefixPattern, '') || '/';
 const switchLocales = locales.filter((locale) => locale !== lang) as Lang[];
+const currentPath = getPathWithoutLocale(Astro.url);
 ---
 
 <header class="site-header">

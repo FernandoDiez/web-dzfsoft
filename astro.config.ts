@@ -4,7 +4,7 @@ import { locales, defaultLocale } from "./src/i18n/config";
 
 export default defineConfig({
   site: "https://FernandoDiez.github.io",
-  base: "/web-dzfsoft/",
+  base: "/web-dzfsoft",
   vite: {
     plugins: [tailwindcss()],
   },
