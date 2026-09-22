@@ -1,13 +1,13 @@
 export const ui = {
   es: {
 		common: {
-			title: "DZF SOFT",
+			title: "español",
 		},
   },
 
   en: {
 		common: {
-			title: "DZF SOFT",
+			title: "ingles",
 		},
   },
 };
