@@ -3,6 +3,8 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from "@tailwindcss/vite";
 
+import { locales, defaultLocale } from './src/i18n/utils.js';
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://dzfsoft.es",
@@ -13,8 +15,8 @@ export default defineConfig({
   },
 
 	i18n: {
-    locales: ["es", "en"],
-    defaultLocale: "es",
+    locales: locales,
+    defaultLocale: defaultLocale,
     routing: {
       prefixDefaultLocale: false,
     },
