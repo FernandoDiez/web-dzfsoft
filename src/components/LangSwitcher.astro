@@ -1,0 +1,224 @@
+---
+// Reusable language switcher: shows current locale and links to the
+// equivalent path in each other locale, preserving the current page.
+import { locales, defaultLocale, getLang } from "../i18n/utils.js";
+
+const langMeta: Record<string, { short: string; label: string }> = {
+	es: { short: "ES", label: "Español" },
+	en: { short: "EN", label: "English" },
+};
+
+const { pathname } = Astro.url;
+const currentLocale = getLang(pathname);
+
+function getLocalizedPath(targetLocale: string) {
+	const segments = pathname.split("/").filter(Boolean);
+	if (locales.includes(segments[0])) segments.shift();
+	const rest = segments.join("/");
+
+	if (targetLocale === defaultLocale) {
+		return rest ? `/${rest}` : "/";
+	}
+	return rest ? `/${targetLocale}/${rest}` : `/${targetLocale}`;
+}
+
+const options = locales.map((locale) => ({
+	locale,
+	href: getLocalizedPath(locale),
+	...langMeta[locale],
+}));
+---
+
+<div class="lang-switcher">
+	<button
+		id="lang-switcher-toggle"
+		class="lang-switcher-toggle"
+		type="button"
+		aria-haspopup="true"
+		aria-expanded="false"
+		aria-label={`Idioma actual: ${langMeta[currentLocale]?.label ?? currentLocale}`}
+	>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="16"
+			height="16"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			aria-hidden="true"
+		>
+			<circle cx="12" cy="12" r="10"></circle>
+			<line x1="2" y1="12" x2="22" y2="12"></line>
+			<path
+				d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+			></path>
+		</svg>
+		<span class="lang-switcher-current">{langMeta[currentLocale]?.short ?? currentLocale}</span>
+	</button>
+
+	<ul id="lang-switcher-menu" class="lang-switcher-menu hidden" role="menu">
+		{
+			options.map((option) => (
+				<li role="none">
+					<a
+						role="menuitem"
+						href={option.href}
+						class="lang-switcher-option"
+						aria-current={option.locale === currentLocale ? "true" : undefined}
+						data-active={option.locale === currentLocale}
+					>
+						<span class="lang-switcher-option-short">{option.short}</span>
+						<span class="lang-switcher-option-label">{option.label}</span>
+						{option.locale === currentLocale && (
+							<svg
+								class="lang-switcher-check"
+								xmlns="http://www.w3.org/2000/svg"
+								width="14"
+								height="14"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<polyline points="20 6 9 17 4 12" />
+							</svg>
+						)}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</div>
+
+<script>
+	document.querySelectorAll(".lang-switcher").forEach((wrapper) => {
+		const toggle = wrapper.querySelector<HTMLButtonElement>(".lang-switcher-toggle");
+		const menu = wrapper.querySelector<HTMLUListElement>(".lang-switcher-menu");
+		if (!toggle || !menu) return;
+
+		const close = () => {
+			menu.classList.add("hidden");
+			toggle.setAttribute("aria-expanded", "false");
+		};
+
+		const open = () => {
+			menu.classList.remove("hidden");
+			toggle.setAttribute("aria-expanded", "true");
+		};
+
+		toggle.addEventListener("click", (event) => {
+			event.stopPropagation();
+			menu.classList.contains("hidden") ? open() : close();
+		});
+
+		document.addEventListener("click", (event) => {
+			if (!wrapper.contains(event.target as Node)) close();
+		});
+
+		document.addEventListener("keydown", (event) => {
+			if (event.key === "Escape") {
+				close();
+				toggle.focus();
+			}
+		});
+	});
+</script>
+
+<style>
+	.lang-switcher {
+		position: relative;
+	}
+
+	.lang-switcher-toggle {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.4rem 0.6rem;
+		background: transparent;
+		color: var(--color-text);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		cursor: pointer;
+		transition:
+			background var(--transition),
+			border-color var(--transition);
+	}
+
+	.lang-switcher-toggle:hover {
+		background: var(--color-bg-mute);
+	}
+
+	.lang-switcher-current {
+		line-height: 1;
+	}
+
+	.lang-switcher-menu {
+		position: absolute;
+		top: calc(100% + 0.4rem);
+		right: 0;
+		min-width: 160px;
+		margin: 0;
+		padding: 0.35rem;
+		list-style: none;
+		background: var(--color-card-bg);
+		border: 1px solid var(--color-card-border);
+		border-radius: var(--radius);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+		z-index: 200;
+	}
+
+	.lang-switcher-menu.hidden {
+		display: none;
+	}
+
+	.lang-switcher-option {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 0.6rem;
+		border-radius: calc(var(--radius) - 0.25rem);
+		color: var(--color-text);
+		text-decoration: none;
+		font-size: 0.85rem;
+		transition: background var(--transition);
+	}
+
+	.lang-switcher-option:hover {
+		background: var(--color-bg-mute);
+	}
+
+	.lang-switcher-option[data-active="true"] {
+		font-weight: 600;
+		color: var(--color-text);
+		background: var(--color-bg-soft);
+	}
+
+	.lang-switcher-option-short {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.6rem;
+		height: 1.6rem;
+		font-size: 0.7rem;
+		font-weight: 700;
+		border-radius: 999px;
+		background: var(--color-bg-mute);
+	}
+
+	.lang-switcher-option-label {
+		flex: 1;
+	}
+
+	.lang-switcher-check {
+		color: var(--color-text-soft);
+	}
+</style>
