@@ -31,7 +31,6 @@ const options = locales.map((locale) => ({
 
 <div class="lang-switcher">
 	<button
-		id="lang-switcher-toggle"
 		class="lang-switcher-toggle"
 		type="button"
 		aria-haspopup="true"
@@ -59,7 +58,7 @@ const options = locales.map((locale) => ({
 		<span class="lang-switcher-current">{langMeta[currentLocale]?.short ?? currentLocale}</span>
 	</button>
 
-	<ul id="lang-switcher-menu" class="lang-switcher-menu hidden" role="menu">
+	<ul class="lang-switcher-menu hidden" role="menu">
 		{
 			options.map((option) => (
 				<li role="none">

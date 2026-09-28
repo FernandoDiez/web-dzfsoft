@@ -18,15 +18,17 @@ const t = ui[locale as keyof typeof ui];
 		<!-- Desktop nav -->
 		<nav class="nav-desktop" aria-label="Main navigation">
 			<a href="/">{t.common.home}</a>
-			<a href="#services">{t.common.services}</a>
-			<a href="#about">{t.common.about}</a>
+			<a href="/services">{t.common.services}</a>
+			<a href="/about">{t.common.about}</a>
 			<a href="/contact" class="nav-cta">{t.common.contact}</a>
 		</nav>
 
 		<!-- Right controls -->
 		<div class="header-controls">
-			<LangSwitcher />
-			<ThemeSwitcher />
+			<div class="header-switchers header-switchers-desktop">
+				<LangSwitcher />
+				<ThemeSwitcher />
+			</div>
 
 			<!-- Mobile menu toggle -->
 			<button
@@ -71,10 +73,13 @@ const t = ui[locale as keyof typeof ui];
 	<!-- Mobile nav drawer -->
 	<nav id="mobile-nav" class="nav-mobile hidden" aria-label="Mobile navigation">
 		<a href="/">{t.common.home}</a>
-		<a href="#services">{t.common.services}</a>
-		<a href="#about">{t.common.about}</a>
+		<a href="/services">{t.common.services}</a>
+		<a href="/about">{t.common.about}</a>
 		<a href="/contact" class="nav-cta">{t.common.contact}	</a>
-		<LangSwitcher />
+		<div class="header-switchers mobile-switchers">
+			<LangSwitcher />
+			<ThemeSwitcher />
+		</div>
 	</nav>
 </header>
 
@@ -208,6 +213,32 @@ const t = ui[locale as keyof typeof ui];
 		align-items: center;
 		gap: 0.5rem;
 		margin-left: auto;
+	}
+
+	.header-switchers {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.header-switchers-desktop {
+		display: none;
+	}
+
+	.mobile-switchers {
+		padding: 0.75rem;
+		margin-top: 0.5rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	@media (min-width: 768px) {
+		.header-switchers-desktop {
+			display: flex;
+		}
+
+		.mobile-switchers {
+			display: none;
+		}
 	}
 
 	.icon-btn {
