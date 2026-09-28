@@ -1,6 +1,10 @@
 ---
 import LangSwitcher from "./LangSwitcher.astro";
 import ThemeSwitcher from "./ThemeSwitcher.astro";
+import { ui } from "../i18n/ui.js";
+
+const { locale } = Astro.props;
+const t = ui[locale as keyof typeof ui];
 ---
 
 <header class="site-header">
@@ -13,10 +17,10 @@ import ThemeSwitcher from "./ThemeSwitcher.astro";
 
 		<!-- Desktop nav -->
 		<nav class="nav-desktop" aria-label="Main navigation">
-			<a href="/">Inicio</a>
-			<a href="#services">Servicios</a>
-			<a href="#about">Acerca de</a>
-			<a href="/contact" class="nav-cta">Contacto</a>
+			<a href="/">{t.common.home}</a>
+			<a href="#services">{t.common.services}</a>
+			<a href="#about">{t.common.about}</a>
+			<a href="/contact" class="nav-cta">{t.common.contact}</a>
 		</nav>
 
 		<!-- Right controls -->
@@ -66,10 +70,10 @@ import ThemeSwitcher from "./ThemeSwitcher.astro";
 
 	<!-- Mobile nav drawer -->
 	<nav id="mobile-nav" class="nav-mobile hidden" aria-label="Mobile navigation">
-		<a href="/">Inicio</a>
-		<a href="#services">Servicios</a>
-		<a href="#about">Acerca de</a>
-		<a href="/contact" class="nav-cta">Contacto</a>
+		<a href="/">{t.common.home}</a>
+		<a href="#services">{t.common.services}</a>
+		<a href="#about">{t.common.about}</a>
+		<a href="/contact" class="nav-cta">{t.common.contact}	</a>
 		<LangSwitcher />
 	</nav>
 </header>
