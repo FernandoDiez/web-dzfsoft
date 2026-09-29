@@ -1,0 +1,68 @@
+---
+// Kept intentionally low-key: technology is a means, not the message.
+const stack = [
+  "Astro",
+  "React",
+  "WordPress",
+  "WooCommerce",
+  "Tailwind CSS",
+  "Node.js",
+  "MongoDB",
+];
+---
+
+<section class="section tech">
+  <div class="container tech-inner">
+    <h2 class="tech-title">Trabajo con la tecnología adecuada para cada proyecto</h2>
+    <p class="tech-lead">
+      No todos los proyectos necesitan lo mismo. Elijo las herramientas en función de lo que
+      necesita tu negocio: una web sencilla no requiere lo mismo que una tienda online o un
+      desarrollo a medida.
+    </p>
+
+    <ul class="tech-badges">
+      {stack.map((name) => <li class="tech-badge">{name}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .tech {
+    background: var(--color-bg-soft);
+  }
+
+  .tech-inner {
+    max-width: 720px;
+  }
+
+  .tech-title {
+    font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .tech-lead {
+    margin-top: 0.75rem;
+    color: var(--color-text-soft);
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .tech-badges {
+    list-style: none;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .tech-badge {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-soft);
+    background: var(--color-bg-mute);
+    border: 1px solid var(--color-border);
+    border-radius: 2rem;
+    padding: 0.35rem 0.9rem;
+  }
+</style>

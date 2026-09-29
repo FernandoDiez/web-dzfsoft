@@ -1,0 +1,147 @@
+---
+// Native <details>/<summary> accordion — accessible and dependency-free.
+const faqs = [
+  {
+    question: "¿Cuánto cuesta hacer una página web?",
+    answer:
+      "Depende del tipo de web y de lo que necesites: no es lo mismo una web sencilla que una tienda online o un desarrollo a medida. Cuéntame tu proyecto y te paso un presupuesto ajustado a tu caso, sin compromiso.",
+  },
+  {
+    question: "¿Necesito comprar un dominio?",
+    answer:
+      "Sí, el dominio es el nombre de tu web (por ejemplo, tunegocio.com). Si no tienes uno todavía, te ayudo a elegirlo y registrarlo.",
+  },
+  {
+    question: "¿Necesito contratar hosting?",
+    answer:
+      "Sí, es el espacio donde vive tu web para que esté visible en Internet. Te oriento sobre la opción más adecuada según tu proyecto.",
+  },
+  {
+    question: "¿Podré modificar mi web yo mismo?",
+    answer:
+      "Depende de la solución que elijamos. Con WordPress puedes cambiar textos, fotos y contenidos sin ayuda. Si prefieres no tocar nada, también puedo encargarme yo de las actualizaciones.",
+  },
+  {
+    question: "¿La web funcionará bien en el móvil?",
+    answer:
+      "Sí. Hoy en día la mayoría de visitas llegan desde el móvil, así que todas las webs que hago están adaptadas para verse bien en cualquier pantalla.",
+  },
+  {
+    question: "¿Podré aparecer en Google?",
+    answer:
+      "Las webs se construyen siguiendo buenas prácticas para que Google pueda encontrarlas y entenderlas. Aparecer en las primeras posiciones depende de más factores, pero partimos con una buena base.",
+  },
+  {
+    question: "¿Podéis hacer una tienda online?",
+    answer:
+      "Sí, hago tiendas online sencillas y fáciles de gestionar para que puedas vender tus productos por Internet.",
+  },
+  {
+    question: "¿Puedo empezar con una web sencilla y ampliarla después?",
+    answer:
+      "Sí, es una opción muy habitual y recomendable. Empezamos con lo esencial y, cuando lo necesites, añadimos más secciones o funcionalidades.",
+  },
+  {
+    question: "¿Tengo que saber programación?",
+    answer:
+      "No, ninguna. Yo me encargo de toda la parte técnica. Tú solo tienes que contarme qué necesitas.",
+  },
+  {
+    question: "¿Ofreces mantenimiento?",
+    answer:
+      "Sí. Una vez publicada la web, puedo ayudarte con actualizaciones, cambios o mejoras siempre que lo necesites.",
+  },
+];
+---
+
+<section id="faq" class="section faq">
+  <div class="container faq-inner">
+    <h2 class="faq-title">Preguntas frecuentes</h2>
+
+    <div class="faq-list">
+      {
+        faqs.map((item) => (
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>{item.question}</span>
+              <svg
+                class="faq-chevron"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </summary>
+            <p class="faq-answer">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-inner {
+    max-width: 760px;
+  }
+
+  .faq-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .faq-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .faq-item {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-text);
+    list-style: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-chevron {
+    flex-shrink: 0;
+    color: var(--color-text-mute);
+    transition: transform var(--transition);
+  }
+
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    margin-top: 0.85rem;
+    color: var(--color-text-soft);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+</style>

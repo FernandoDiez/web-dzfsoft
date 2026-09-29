@@ -1,0 +1,94 @@
+---
+// Connects with the visitor's current situation so they identify their own case.
+const situations = [
+  "Todavía no tengo página web para mi negocio",
+  "Necesito una web pero no sé por dónde empezar",
+  "Mi web es antigua y ya no me representa",
+  "Quiero enseñar mis servicios a mis clientes",
+  "Quiero vender mis productos por Internet",
+  "Mi web no se ve bien en el móvil",
+  "Quiero poder actualizar mis textos y fotos yo mismo",
+];
+---
+
+<section class="section problem">
+  <div class="container">
+    <h2 class="problem-title">¿Te sientes identificado con alguna de estas situaciones?</h2>
+    <p class="problem-lead">
+      Es habitual llegar a este punto. Sea cual sea tu caso, seguramente hay una solución sencilla.
+    </p>
+
+    <ul class="problem-list">
+      {
+        situations.map((text) => (
+          <li class="problem-item">
+            <svg
+              class="problem-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span>{text}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .problem-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    max-width: 640px;
+  }
+
+  .problem-lead {
+    margin-top: 0.75rem;
+    color: var(--color-text-soft);
+    max-width: 560px;
+  }
+
+  .problem-list {
+    list-style: none;
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 700px) {
+    .problem-list {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 1.5rem;
+    }
+  }
+
+  .problem-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.9rem 1.1rem;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius);
+    font-size: 0.98rem;
+    color: var(--color-text);
+  }
+
+  .problem-icon {
+    flex-shrink: 0;
+    color: var(--accent-mid);
+    margin-top: 0.15rem;
+  }
+</style>

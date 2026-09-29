@@ -1,0 +1,116 @@
+---
+// Simple numbered process, written so a non-technical reader feels guided end to end.
+const steps = [
+  {
+    title: "Me cuentas qué necesitas",
+    description: "Hablamos de tu negocio, tu situación actual y lo que quieres conseguir.",
+  },
+  {
+    title: "Vemos qué solución encaja mejor",
+    description: "Analizamos las opciones y te propongo la que más sentido tiene para ti.",
+  },
+  {
+    title: "Diseño y desarrollo la web",
+    description: "Me pongo manos a la obra y te mantengo informado durante el proceso.",
+  },
+  {
+    title: "Revisamos juntos el resultado",
+    description: "Vemos la web, ajustamos lo que haga falta y resolvemos tus dudas.",
+  },
+  {
+    title: "Publicamos la web",
+    description: "Ponemos la web en marcha para que ya esté visible para tus clientes.",
+  },
+  {
+    title: "Te acompaño después",
+    description: "Si más adelante necesitas mejoras o mantenimiento, seguimos en contacto.",
+  },
+];
+---
+
+<section class="section process">
+  <div class="container">
+    <h2 class="process-title">Cómo trabajamos</h2>
+    <p class="process-lead">
+      No necesitas saber nada de programación. Yo me encargo de la parte técnica; tú solo tienes
+      que contarme lo que necesitas.
+    </p>
+
+    <ol class="process-list">
+      {
+        steps.map((step, index) => (
+          <li class="process-item">
+            <span class="process-number" aria-hidden="true">
+              {index + 1}
+            </span>
+            <div>
+              <h3 class="process-step-title">{step.title}</h3>
+              <p class="process-step-desc">{step.description}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .process-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .process-lead {
+    margin-top: 0.75rem;
+    color: var(--color-text-soft);
+    max-width: 560px;
+  }
+
+  .process-list {
+    list-style: none;
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 700px) {
+    .process-list {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 2.5rem;
+    }
+  }
+
+  .process-item {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .process-number {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+  }
+
+  .process-step-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .process-step-desc {
+    margin-top: 0.35rem;
+    color: var(--color-text-soft);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+</style>

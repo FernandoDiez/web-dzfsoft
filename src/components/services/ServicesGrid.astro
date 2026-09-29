@@ -1,0 +1,150 @@
+---
+// Services described from the client's point of view, not the technology.
+const services = [
+  {
+    title: "Página web para tu negocio",
+    description:
+      "Una web profesional para autónomos, comercios y pequeñas empresas: quién eres, qué ofreces y cómo contactar contigo.",
+    icon: "monitor",
+  },
+  {
+    title: "Web corporativa",
+    description:
+      "Presencia online seria y cuidada para presentar tu empresa, tus servicios y generar confianza en quien te visita.",
+    icon: "briefcase",
+  },
+  {
+    title: "Tiendas online",
+    description:
+      "Tiendas sencillas y fáciles de gestionar para vender tus productos por Internet, sin complicarte con la parte técnica.",
+    icon: "cart",
+  },
+  {
+    title: "WordPress",
+    description:
+      "Webs que puedes administrar tú mismo: ideales si necesitas cambiar textos, fotos o publicar novedades con frecuencia.",
+    icon: "edit",
+  },
+  {
+    title: "Rediseño de webs",
+    description:
+      "Renovación de webs antiguas: mejor diseño, adaptación a móviles, más velocidad y una estructura más clara.",
+    icon: "refresh",
+  },
+  {
+    title: "Desarrollo a medida",
+    description:
+      "Para proyectos con necesidades concretas que no encajan en una solución estándar. Lo estudiamos juntos.",
+    icon: "code",
+  },
+] as const;
+
+const icons: Record<string, string> = {
+  monitor:
+    '<rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>',
+  briefcase:
+    '<rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>',
+  cart: '<circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>',
+  edit: '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>',
+  refresh:
+    '<polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>',
+  code: '<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>',
+};
+---
+
+<section id="servicios" class="section services">
+  <div class="container">
+    <h2 class="services-title">En qué puedo ayudarte</h2>
+    <p class="services-lead">
+      Estos son los servicios más habituales. Si tu caso no encaja exactamente, hablamos y vemos
+      qué solución tiene más sentido para ti.
+    </p>
+
+    <div class="services-grid">
+      {
+        services.map((service) => (
+          <article class="card service-card">
+            <span class="service-icon" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={icons[service.icon]}
+              />
+            </span>
+            <h3 class="service-title">{service.title}</h3>
+            <p class="service-desc">{service.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .services-lead {
+    margin-top: 0.75rem;
+    color: var(--color-text-soft);
+    max-width: 560px;
+  }
+
+  .services-grid {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .services-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .service-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 0.65rem;
+    color: var(--accent-mid);
+    background: rgba(99, 102, 241, 0.1);
+  }
+
+  .service-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .service-desc {
+    color: var(--color-text-soft);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+</style>

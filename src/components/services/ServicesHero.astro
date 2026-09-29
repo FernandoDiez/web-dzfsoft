@@ -1,0 +1,86 @@
+---
+// Page hero: answers "what do you do / for whom / what do they get" in one glance.
+---
+
+<section class="svc-hero section">
+  <div class="container svc-hero-inner">
+    <span class="svc-hero-tag">Desarrollo web</span>
+    <h1 class="svc-hero-title">Páginas web para autónomos y pequeños negocios</h1>
+    <p class="svc-hero-sub">
+      Diseño y desarrollo páginas web sencillas, rápidas y profesionales, adaptadas a tu negocio y
+      a tu presupuesto. Trabajamos directamente tú y yo, sin intermediarios ni letra pequeña.
+    </p>
+    <div class="svc-hero-actions">
+      <a href="/contact" class="btn-primary">
+        Cuéntame tu proyecto
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"
+          ></polyline></svg
+        >
+      </a>
+      <a href="#servicios" class="btn-ghost">Ver servicios</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .svc-hero {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124, 58, 237, 0.1) 0%, transparent 70%),
+      var(--color-bg);
+    padding-bottom: 3rem;
+  }
+
+  .svc-hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    max-width: 720px;
+  }
+
+  .svc-hero-tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent-start);
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 2rem;
+    padding: 0.3rem 0.85rem;
+  }
+
+  .svc-hero-title {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .svc-hero-sub {
+    font-size: 1.05rem;
+    color: var(--color-text-soft);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  .svc-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+</style>

@@ -1,7 +1,30 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ServicesHero from "../components/services/ServicesHero.astro";
+import ProblemSection from "../components/services/ProblemSection.astro";
+import ServicesGrid from "../components/services/ServicesGrid.astro";
+import WebFinder from "../components/services/WebFinder.astro";
+import BenefitsSection from "../components/services/BenefitsSection.astro";
+import TechSection from "../components/services/TechSection.astro";
+import ProcessSection from "../components/services/ProcessSection.astro";
+import FaqSection from "../components/services/FaqSection.astro";
+import FinalCta from "../components/services/FinalCta.astro";
+
+const title = "Páginas web para autónomos y pequeños negocios | dzf soft";
+const description =
+  "Diseño y desarrollo páginas web profesionales para autónomos, comercios y pequeñas empresas: webs de servicios, tiendas online, rediseños y proyectos a medida.";
 ---
 
-<Layout>
-  <h1 class="text-3xl font-bold underline text-blue-600">Services</h1>
+<Layout title={title} description={description}>
+  <main>
+    <ServicesHero />
+    <ProblemSection />
+    <ServicesGrid />
+    <WebFinder />
+    <BenefitsSection />
+    <TechSection />
+    <ProcessSection />
+    <FaqSection />
+    <FinalCta />
+  </main>
 </Layout>

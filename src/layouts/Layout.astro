@@ -4,8 +4,16 @@ import { ui } from "../i18n/ui.js";
 import { getLang } from "../i18n/utils.js";
 import "../styles/global.css";
 
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props as Props;
+
 const locale = getLang(Astro.url.pathname) as keyof typeof ui;
 const t = ui[locale];
+const pageTitle = title ?? t.common.title;
 ---
 
 <!doctype html>
@@ -17,7 +25,8 @@ const t = ui[locale];
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
 
-    <title>{t.common.title}</title>
+    <title>{pageTitle}</title>
+    {description && <meta name="description" content={description} />}
 
     <script is:inline>
       (() => {
