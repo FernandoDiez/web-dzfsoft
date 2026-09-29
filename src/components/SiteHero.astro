@@ -1,0 +1,103 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  primaryHref,
+  primaryLabel,
+  secondaryHref,
+  secondaryLabel,
+} = Astro.props;
+---
+
+<section class="site-hero section">
+  <div class="container site-hero-inner">
+    <span class="site-hero-eyebrow">{eyebrow}</span>
+    <h1 class="site-hero-title">{title}</h1>
+    <p class="site-hero-description">{description}</p>
+    {(primaryHref && primaryLabel) || (secondaryHref && secondaryLabel) ? (
+      <div class="site-hero-actions">
+        {primaryHref && primaryLabel && <a href={primaryHref} class="btn-primary">{primaryLabel}</a>}
+        {secondaryHref && secondaryLabel && <a href={secondaryHref} class="btn-ghost">{secondaryLabel}</a>}
+      </div>
+    ) : null}
+  </div>
+</section>
+
+<style>
+  .site-hero {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124, 58, 237, 0.1) 0%, transparent 70%),
+      var(--color-bg);
+    padding-bottom: 3.5rem;
+  }
+
+  .site-hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    max-width: 760px;
+  }
+
+  .site-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent-start);
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 2rem;
+    padding: 0.3rem 0.85rem;
+  }
+
+  .site-hero-title {
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    max-width: 780px;
+  }
+
+  .site-hero-description {
+    font-size: 1.05rem;
+    color: var(--color-text-soft);
+    line-height: 1.7;
+    max-width: 620px;
+  }
+
+  .site-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 480px) {
+    .site-hero-actions {
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .site-hero-actions :global(.btn-primary),
+    .site-hero-actions :global(.btn-ghost) {
+      justify-content: center;
+      min-height: 48px;
+    }
+  }
+</style>

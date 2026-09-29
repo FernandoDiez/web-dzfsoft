@@ -5,22 +5,25 @@ import { ui } from "../i18n/ui.js";
 
 const { locale } = Astro.props;
 const t = ui[locale as keyof typeof ui];
+const localePrefix = locale === "en" ? "/en" : "";
+const homeHref = localePrefix || "/";
 ---
 
 <header class="site-header">
 	<div class="header-inner">
 		<!-- Logo -->
-		<a href="/" class="logo" aria-label="dzf soft — Home">
+		<a href={homeHref} class="logo" aria-label={locale === "es" ? "dzf soft — Inicio" : "dzf soft — Home"}>
 			<span class="logo-mark" aria-hidden="true">⬡</span>
 			<span class="logo-text">dzf <span class="logo-soft">soft</span></span>
 		</a>
 
 		<!-- Desktop nav -->
-		<nav class="nav-desktop" aria-label="Main navigation">
-			<a href="/">{t.common.home}</a>
-			<a href="/services">{t.common.services}</a>
-			<a href="/about">{t.common.about}</a>
-			<a href="/contact" class="nav-cta">{t.common.contact}</a>
+		<nav class="nav-desktop" aria-label={locale === "es" ? "Navegación principal" : "Main navigation"}>
+			<a href={homeHref}>{t.common.home}</a>
+			<a href={`${localePrefix}/services`}>{t.common.services}</a>
+			<a href={`${localePrefix}/about`}>{t.common.about}</a>
+			<a href={`${localePrefix}/contact`}>{t.common.contact}</a>
+			<a href={locale === "en" ? "/en/budget" : "/presupuesto"} class="nav-cta">{t.common.budget}</a>
 		</nav>
 
 		<!-- Right controls -->
@@ -33,7 +36,7 @@ const t = ui[locale as keyof typeof ui];
 			<!-- Mobile menu toggle -->
 			<button
 				id="menu-toggle"
-				aria-label="Toggle navigation menu"
+				aria-label={locale === "es" ? "Menú de navegación" : "Toggle navigation menu"}
 				aria-expanded="false"
 				class="icon-btn mobile-only"
 			>
@@ -71,11 +74,12 @@ const t = ui[locale as keyof typeof ui];
 	</div>
 
 	<!-- Mobile nav drawer -->
-	<nav id="mobile-nav" class="nav-mobile hidden" aria-label="Mobile navigation">
-		<a href="/">{t.common.home}</a>
-		<a href="/services">{t.common.services}</a>
-		<a href="/about">{t.common.about}</a>
-		<a href="/contact" class="nav-cta">{t.common.contact}	</a>
+	<nav id="mobile-nav" class="nav-mobile hidden" aria-label={locale === "es" ? "Navegación móvil" : "Mobile navigation"}>
+		<a href={homeHref}>{t.common.home}</a>
+		<a href={`${localePrefix}/services`}>{t.common.services}</a>
+		<a href={`${localePrefix}/about`}>{t.common.about}</a>
+		<a href={`${localePrefix}/contact`}>{t.common.contact}</a>
+		<a href={locale === "en" ? "/en/budget" : "/presupuesto"} class="nav-cta">{t.common.budget}</a>
 		<div class="header-switchers mobile-switchers">
 			<LangSwitcher />
 			<ThemeSwitcher />

@@ -1,7 +1,255 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import SiteHero from "../components/SiteHero.astro";
+import SiteCta from "../components/SiteCta.astro";
+
+const title = "Sobre mí | Desarrollador web desde 2015 | dzf soft";
+const description =
+  "Conoce a la persona detrás de dzf soft: desarrollador web con experiencia profesional desde 2015 y un trato directo, claro y adaptado a cada proyecto.";
+
+const principles = [
+  {
+    title: "Cada negocio es diferente",
+    description: "La solución tiene que partir de tus objetivos, tus clientes y tu forma de trabajar.",
+  },
+  {
+    title: "Menos puede ser más",
+    description: "Si una web sencilla resuelve lo que necesitas, no tiene sentido añadir complejidad o costes innecesarios.",
+  },
+  {
+    title: "La tecnología está al servicio del proyecto",
+    description: "Elijo cómo construir la web según lo que necesite hacer, no para usar una herramienta concreta.",
+  },
+  {
+    title: "Fácil de usar y mantener",
+    description: "La web debe ser clara para tus visitantes y práctica para ti cuando necesites gestionarla.",
+  },
+];
+
+const areas = [
+  { title: "Web y experiencia visual", tools: "JavaScript · React · Astro · HTML y CSS · Tailwind" },
+  { title: "Funcionalidades y conexiones", tools: "Node.js · APIs · Bases de datos · Aplicaciones web" },
+  { title: "Contenidos y comercio online", tools: "WordPress · WooCommerce" },
+];
 ---
 
-<Layout>
-  <h1 class="text-3xl font-bold underline text-blue-600">About me</h1>
+<Layout title={title} description={description}>
+  <main>
+    <SiteHero
+      eyebrow="Sobre mí"
+      title="Detrás de cada proyecto hay una persona"
+      description="Soy desarrollador web y trabajo directamente con profesionales y pequeños negocios para crear soluciones claras, útiles y hechas a su medida."
+      primaryHref="/presupuesto"
+      primaryLabel="Cuéntame tu proyecto"
+    />
+
+    <section class="section about-story">
+      <div class="container story-layout">
+        <div>
+          <span class="section-eyebrow">Mi trayectoria</span>
+          <h2>Experiencia que empieza escuchando</h2>
+        </div>
+        <div class="story-copy">
+          <p>
+            Trabajo profesionalmente en desarrollo web desde 2015. A lo largo de estos años he
+            participado en proyectos muy distintos: desde páginas web y tiendas online hasta
+            aplicaciones, conexiones con otros servicios y herramientas para resolver necesidades
+            concretas.
+          </p>
+          <p>
+            Esa variedad me ha enseñado que no hay una receta única. Antes de pensar en cómo
+            construir una web, prefiero entender qué quieres conseguir, qué necesitas ahora y qué
+            puede esperar.
+          </p>
+          <p>
+            Y, sobre todo, me gusta que el proceso sea una conversación entre personas: con
+            explicaciones claras, decisiones compartidas y sin que tengas que aprender programación
+            para sacar adelante tu idea.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about-principles">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-eyebrow">Cómo entiendo el desarrollo web</span>
+          <h2>Una buena solución no tiene por qué ser complicada</h2>
+          <p>La web tiene que ayudarte en tu negocio, no convertirse en otro problema que gestionar.</p>
+        </div>
+        <div class="principles-grid">
+          {principles.map((principle) => (
+            <article class="card principle-card">
+              <span class="principle-marker" aria-hidden="true">✳</span>
+              <h3>{principle.title}</h3>
+              <p>{principle.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section about-experience">
+      <div class="container experience-layout">
+        <div class="section-heading">
+          <span class="section-eyebrow">Experiencia y herramientas</span>
+          <h2>Distintas herramientas para necesidades distintas</h2>
+          <p>
+            He trabajado con tecnologías y plataformas variadas. Son la base de mi experiencia,
+            pero la elección depende siempre de tu proyecto.
+          </p>
+        </div>
+        <div class="experience-list">
+          {areas.map((area) => (
+            <article class="card experience-card">
+              <h3>{area.title}</h3>
+              <p>{area.tools}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section about-client">
+      <div class="container client-inner">
+        <span class="section-eyebrow">No necesitas saber de tecnología</span>
+        <h2>Te acompaño y te lo explico con claridad</h2>
+        <p>
+          Puedes preguntarme lo que necesites, aunque no sepas cómo se llama o cómo se programa.
+          Trabajamos directamente y te ayudo a tomar las decisiones importantes sin abrumarte con
+          detalles técnicos.
+        </p>
+        <a class="text-link" href="/services">Descubre cómo puedo ayudarte <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <SiteCta
+      title="¿Tienes un proyecto en mente?"
+      description="Cuéntame en qué punto estás. No hace falta que tengas todas las respuestas para empezar a hablar."
+    />
+  </main>
 </Layout>
+
+<style>
+  .section-eyebrow {
+    color: var(--accent-start);
+    font-size: 0.82rem;
+    font-weight: 650;
+    letter-spacing: 0.035em;
+  }
+
+  .section-heading {
+    max-width: 700px;
+  }
+
+  .section-heading h2,
+  .story-layout h2,
+  .client-inner h2 {
+    margin-top: 0.65rem;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .section-heading > p,
+  .client-inner > p {
+    margin-top: 0.8rem;
+    max-width: 620px;
+    color: var(--color-text-soft);
+    line-height: 1.7;
+  }
+
+  .about-story,
+  .about-experience {
+    background: var(--color-bg-soft);
+  }
+
+  .story-layout,
+  .experience-layout {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .story-copy {
+    display: grid;
+    gap: 1rem;
+    color: var(--color-text-soft);
+    line-height: 1.75;
+  }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .principle-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .principle-marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 0.65rem;
+    color: var(--accent-mid);
+    background: rgba(99, 102, 241, 0.1);
+  }
+
+  .principle-card h3,
+  .experience-card h3 {
+    font-size: 1.05rem;
+  }
+
+  .principle-card p,
+  .experience-card p {
+    color: var(--color-text-soft);
+    line-height: 1.65;
+  }
+
+  .experience-list {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .experience-card {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .experience-card p {
+    margin-top: 0.4rem;
+    font-size: 0.92rem;
+  }
+
+  .about-client {
+    text-align: center;
+  }
+
+  .client-inner {
+    max-width: 720px;
+  }
+
+  .client-inner > p {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  @media (min-width: 680px) {
+    .story-layout,
+    .experience-layout {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .principles-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

@@ -1,0 +1,351 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SiteHero from "../components/SiteHero.astro";
+import StaticFormNotice from "../components/StaticFormNotice.astro";
+
+const title = "Request a website quote | dzf soft";
+const description =
+  "Tell me what your business needs and get a tailored web proposal. You do not need to have every detail figured out before getting in touch.";
+
+const projectTypes = [
+  "A website",
+  "An online store",
+  "Redesign my current website",
+  "WordPress",
+  "A specific feature",
+  "A web application",
+  "I'm not sure / I need advice",
+];
+
+const budgetRanges = [
+  "Under €500",
+  "€500 – €1,000",
+  "€1,000 – €2,000",
+  "€2,000 – €5,000",
+  "Over €5,000",
+  "I don't know yet",
+];
+
+const timelines = [
+  "As soon as possible",
+  "In the next few weeks",
+  "In the next few months",
+  "I don't have a specific date",
+];
+---
+
+<Layout title={title} description={description}>
+  <main>
+    <SiteHero
+      eyebrow="Request a quote"
+      title="Tell me about your project"
+      description="You don't need to know exactly what you need. Tell me about your situation, even if you only have an initial idea, and I'll help you find the right solution for your business."
+    />
+
+    <section class="section budget-section">
+      <div class="container budget-layout">
+        <aside class="budget-aside">
+          <span class="section-eyebrow">No jargon, no pressure</span>
+          <h2>A first conversation to understand your idea</h2>
+          <p>
+            The more I know about your project, the better I can understand it. Answer what you
+            already know; it's fine if you still have questions.
+          </p>
+          <ol>
+            <li>Tell me what you want to achieve.</li>
+            <li>We review what you need together.</li>
+            <li>I'll suggest how we can move forward.</li>
+          </ol>
+        </aside>
+
+        <form class="budget-form card" data-static-form>
+          <fieldset>
+            <legend>Contact details</legend>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="budget-name">Name <span aria-hidden="true">*</span></label>
+                <input id="budget-name" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="form-field">
+                <label for="budget-business">Business <span class="optional">(optional)</span></label>
+                <input id="budget-business" name="business" type="text" autocomplete="organization" />
+              </div>
+              <div class="form-field">
+                <label for="budget-email">Email <span aria-hidden="true">*</span></label>
+                <input id="budget-email" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="form-field">
+                <label for="budget-phone">Phone <span class="optional">(optional)</span></label>
+                <input id="budget-phone" name="phone" type="tel" autocomplete="tel" />
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>What do you need? <span aria-hidden="true">*</span></legend>
+            <p class="field-help">Choose the option closest to your idea.</p>
+            <div class="choice-grid">
+              {projectTypes.map((type, index) => (
+                <label class="choice-card">
+                  <input type="radio" name="project-type" value={type} required={index === 0} />
+                  <span>{type}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Do you currently have a website?</legend>
+            <div class="choice-inline">
+              <label class="choice-card"><input type="radio" name="current-website" value="yes" /><span>Yes</span></label>
+              <label class="choice-card"><input type="radio" name="current-website" value="no" /><span>No</span></label>
+              <label class="choice-card"><input type="radio" name="current-website" value="unsure" /><span>I'm not sure</span></label>
+            </div>
+            <div class="form-field website-url">
+              <label for="budget-website">Current website URL <span class="optional">(optional)</span></label>
+              <input id="budget-website" name="website-url" type="url" autocomplete="url" placeholder="https://" />
+              <span class="field-help">If you already have a website, you can share its address here.</span>
+            </div>
+          </fieldset>
+
+          <div class="form-field">
+            <label for="budget-description">Tell me briefly what you need <span aria-hidden="true">*</span></label>
+            <textarea id="budget-description" name="description" rows="6" required aria-describedby="budget-description-help"></textarea>
+            <span class="field-help" id="budget-description-help">
+              No technical terms needed. Tell me what you'd like to achieve and what you need the website for.
+            </span>
+          </div>
+
+          <fieldset>
+            <legend>Do you have an approximate budget?</legend>
+            <p class="field-help">This is optional. Leave it blank if you're not sure yet.</p>
+            <div class="choice-grid">
+              {budgetRanges.map((range) => (
+                <label class="choice-card"><input type="radio" name="budget-range" value={range} /><span>{range}</span></label>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>When would you like to get started?</legend>
+            <div class="choice-grid">
+              {timelines.map((timeline) => (
+                <label class="choice-card"><input type="radio" name="timeline" value={timeline} /><span>{timeline}</span></label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div class="form-bottom">
+            <p>
+              You don't need to have everything decided. This gives me a first idea, and we can
+              talk about the project together.
+            </p>
+            <button class="btn-primary form-submit" type="button" data-static-submit>Request a quote</button>
+            <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <StaticFormNotice />
+</Layout>
+
+<script>
+  const websiteOptions = document.querySelectorAll<HTMLInputElement>('input[name="current-website"]');
+  const websiteField = document.querySelector<HTMLElement>(".website-url");
+
+  const updateWebsiteField = () => {
+    if (!websiteField) return;
+    const selected = document.querySelector<HTMLInputElement>('input[name="current-website"]:checked');
+    websiteField.hidden = selected?.value !== "yes";
+  };
+
+  updateWebsiteField();
+  websiteOptions.forEach((option) => option.addEventListener("change", updateWebsiteField));
+</script>
+
+<style>
+  .budget-layout {
+    display: grid;
+    align-items: start;
+    gap: 2rem;
+  }
+
+  .budget-aside {
+    max-width: 440px;
+  }
+
+  .section-eyebrow {
+    color: var(--accent-start);
+    font-size: 0.82rem;
+    font-weight: 650;
+  }
+
+  .budget-aside h2 {
+    margin-top: 0.65rem;
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    line-height: 1.25;
+  }
+
+  .budget-aside p,
+  .budget-aside li {
+    margin-top: 0.8rem;
+    color: var(--color-text-soft);
+    line-height: 1.7;
+  }
+
+  .budget-aside ol {
+    padding-left: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .budget-form {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .budget-form fieldset {
+    min-width: 0;
+    border: 0;
+  }
+
+  .budget-form legend {
+    margin-bottom: 0.65rem;
+    font-size: 1.02rem;
+    font-weight: 700;
+  }
+
+  .field-help,
+  .optional {
+    color: var(--color-text-mute);
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .field-help {
+    display: block;
+    margin-top: 0.25rem;
+  }
+
+  .form-grid,
+  .choice-grid,
+  .choice-inline {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-field label {
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .form-field input,
+  .form-field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 0.85rem;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) - 0.2rem);
+    font: inherit;
+  }
+
+  .form-field textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  .choice-card {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 48px;
+    padding: 0.7rem 0.8rem;
+    color: var(--color-text-soft);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) - 0.2rem);
+    cursor: pointer;
+    font-size: 0.91rem;
+  }
+
+  .choice-card:has(input:checked) {
+    color: var(--color-text);
+    background: rgba(99, 102, 241, 0.08);
+    border-color: var(--accent-mid);
+  }
+
+  .choice-card input {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 auto;
+    accent-color: var(--accent-mid);
+  }
+
+  .choice-card:focus-within {
+    outline: 2px solid var(--accent-start);
+    outline-offset: 2px;
+  }
+
+  .website-url {
+    margin-top: 1rem;
+  }
+
+  .website-url[hidden] {
+    display: none;
+  }
+
+  .form-bottom {
+    display: grid;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .form-bottom > p:first-child {
+    color: var(--color-text-soft);
+    line-height: 1.7;
+  }
+
+  .form-submit {
+    justify-content: center;
+    min-height: 50px;
+  }
+
+  .form-status {
+    color: var(--color-text-soft);
+    font-size: 0.9rem;
+  }
+
+  .form-status:empty {
+    display: none;
+  }
+
+  @media (min-width: 620px) {
+    .form-grid,
+    .choice-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .choice-inline {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 900px) {
+    .budget-layout {
+      grid-template-columns: minmax(250px, 0.75fr) minmax(0, 1.25fr);
+      gap: 4rem;
+    }
+  }
+</style>

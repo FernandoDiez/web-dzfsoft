@@ -1,7 +1,205 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import SiteHero from "../components/SiteHero.astro";
+import StaticFormNotice from "../components/StaticFormNotice.astro";
+
+const title = "Contacto | Hablemos de tu proyecto web | dzf soft";
+const description =
+  "¿Tienes una pregunta o una idea para tu web? Escríbeme a través del formulario de contacto y hablamos sin compromiso.";
 ---
 
-<Layout>
-  <h1 class="text-3xl font-bold underline text-blue-600">Contact Us</h1>
+<Layout title={title} description={description}>
+  <main>
+    <SiteHero
+      eyebrow="Contacto"
+      title="¿Hablamos?"
+      description="Si tienes una pregunta, una idea o simplemente quieres saber qué opciones tienes, puedes escribirme."
+    />
+
+    <section class="section contact-section">
+      <div class="container contact-layout">
+        <div class="contact-intro">
+          <span class="section-eyebrow">Cuéntame qué necesitas</span>
+          <h2>Estoy aquí para ayudarte a dar el siguiente paso</h2>
+          <p>
+            No hace falta que tengas el proyecto definido ni que conozcas los términos técnicos.
+            Explícame tu situación con tus palabras y te responderé para que podamos ver cómo seguir.
+          </p>
+          <p class="contact-note">Por ahora, el formulario es solo una interfaz y todavía no envía mensajes.</p>
+        </div>
+
+        <form class="contact-form card" data-static-form>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="contact-name">Nombre <span aria-hidden="true">*</span></label>
+              <input id="contact-name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="form-field">
+              <label for="contact-email">Email <span aria-hidden="true">*</span></label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+            <div class="form-field">
+              <label for="contact-phone">Teléfono <span class="optional">(opcional)</span></label>
+              <input id="contact-phone" name="phone" type="tel" autocomplete="tel" />
+            </div>
+            <div class="form-field">
+              <label for="contact-subject">Asunto <span aria-hidden="true">*</span></label>
+              <input id="contact-subject" name="subject" type="text" required />
+            </div>
+            <div class="form-field form-field-full">
+              <label for="contact-message">Mensaje <span aria-hidden="true">*</span></label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows="6"
+                required
+                aria-describedby="contact-message-help"
+              ></textarea>
+              <span class="field-help" id="contact-message-help">Cuéntame brevemente en qué puedo ayudarte.</span>
+            </div>
+          </div>
+
+          <p class="privacy-placeholder">
+            <strong>Información de privacidad pendiente.</strong> Aquí se añadirá el texto legal
+            definitivo antes de activar el envío del formulario.
+          </p>
+          <button class="btn-primary form-submit" type="button" data-static-submit>Enviar mensaje</button>
+          <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <StaticFormNotice />
 </Layout>
+
+<style>
+  .section-eyebrow {
+    color: var(--accent-start);
+    font-size: 0.82rem;
+    font-weight: 650;
+    letter-spacing: 0.035em;
+  }
+
+  .contact-layout {
+    display: grid;
+    align-items: start;
+    gap: 2rem;
+  }
+
+  .contact-intro {
+    max-width: 470px;
+  }
+
+  .contact-intro h2 {
+    margin-top: 0.65rem;
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    line-height: 1.25;
+  }
+
+  .contact-intro > p {
+    margin-top: 0.85rem;
+    color: var(--color-text-soft);
+    line-height: 1.7;
+  }
+
+  .contact-intro .contact-note {
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-bg-soft);
+    font-size: 0.9rem;
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-field label {
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .optional,
+  .field-help {
+    color: var(--color-text-mute);
+    font-size: 0.82rem;
+    font-weight: 400;
+  }
+
+  .form-field input,
+  .form-field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 0.85rem;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: calc(var(--radius) - 0.2rem);
+    font: inherit;
+  }
+
+  .form-field textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  .privacy-placeholder {
+    padding: 0.85rem 1rem;
+    color: var(--color-text-soft);
+    background: var(--color-bg-soft);
+    border: 1px dashed var(--color-border);
+    border-radius: calc(var(--radius) - 0.2rem);
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+
+  .form-submit {
+    justify-content: center;
+    min-height: 48px;
+  }
+
+  .form-status {
+    color: var(--color-text-soft);
+    font-size: 0.9rem;
+  }
+
+  .form-status:empty {
+    display: none;
+  }
+
+  @media (min-width: 800px) {
+    .contact-layout {
+      grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
+      gap: 4rem;
+    }
+
+    .form-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 1.25rem;
+    }
+
+    .form-field-full {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

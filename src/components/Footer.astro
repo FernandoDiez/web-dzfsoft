@@ -1,0 +1,94 @@
+---
+const { locale } = Astro.props;
+const isEnglish = locale === "en";
+const prefix = isEnglish ? "/en" : "";
+const links = isEnglish
+  ? [
+      { label: "Home", href: "/en" },
+      { label: "Services", href: "/en/services" },
+      { label: "About", href: "/en/about" },
+      { label: "Contact", href: "/en/contact" },
+    ]
+  : [
+      { label: "Inicio", href: "/" },
+      { label: "Servicios", href: "/services" },
+      { label: "Sobre mí", href: "/about" },
+      { label: "Contacto", href: "/contact" },
+    ];
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a class="footer-logo" href={prefix || "/"} aria-label={isEnglish ? "dzf soft — Home" : "dzf soft — Inicio"}>
+        dzf <span>soft</span>
+      </a>
+      <p>{isEnglish ? "Professional websites for independent professionals and small businesses." : "Páginas web profesionales para autónomos y pequeños negocios."}</p>
+    </div>
+    <nav class="footer-links" aria-label={isEnglish ? "Footer navigation" : "Navegación del pie de página"}>
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    </nav>
+    <a class="btn-primary footer-cta" href={isEnglish ? "/en/budget" : "/presupuesto"}>
+      {isEnglish ? "Request a quote" : "Pedir presupuesto"}
+    </a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: auto;
+    padding: 2rem 1.5rem;
+    background: var(--color-bg-soft);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer-inner {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: var(--color-text);
+  }
+
+  .footer-logo span {
+    color: var(--accent-mid);
+  }
+
+  .footer-brand p {
+    max-width: 330px;
+    margin-top: 0.4rem;
+    color: var(--color-text-soft);
+    font-size: 0.9rem;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .footer-links a {
+    color: var(--color-text-soft);
+    font-size: 0.9rem;
+  }
+
+  .footer-links a:hover {
+    color: var(--accent-start);
+  }
+
+  .footer-cta {
+    justify-content: center;
+    min-height: 46px;
+  }
+
+  @media (min-width: 850px) {
+    .footer-inner {
+      grid-template-columns: 1fr auto auto;
+      gap: 2rem;
+    }
+  }
+</style>

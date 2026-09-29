@@ -1,5 +1,6 @@
 ---
 import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 import { ui } from "../i18n/ui.js";
 import { getLang } from "../i18n/utils.js";
 import "../styles/global.css";
@@ -27,6 +28,12 @@ const pageTitle = title ?? t.common.title;
 
     <title>{pageTitle}</title>
     {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:locale" content={locale === "es" ? "es_ES" : "en_US"} />
 
     <script is:inline>
       (() => {
@@ -41,8 +48,9 @@ const pageTitle = title ?? t.common.title;
   </head>
 
   <body>
-    <Header locale={locale}/>
+    <Header locale={locale} />
     <slot />
+    <Footer locale={locale} />
   </body>
 </html>
 

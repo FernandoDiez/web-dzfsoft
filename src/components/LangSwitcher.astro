@@ -14,6 +14,13 @@ const currentLocale = getLang(pathname);
 function getLocalizedPath(targetLocale: string) {
 	const segments = pathname.split("/").filter(Boolean);
 	if (locales.includes(segments[0])) segments.shift();
+	const routeAliases: Record<string, Record<string, string>> = {
+		presupuesto: { en: "budget" },
+		budget: { es: "presupuesto" },
+	};
+	if (segments[0]) {
+		segments[0] = routeAliases[segments[0]]?.[targetLocale] ?? segments[0];
+	}
 	const rest = segments.join("/");
 
 	if (targetLocale === defaultLocale) {

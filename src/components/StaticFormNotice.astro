@@ -1,0 +1,14 @@
+<script>
+  document.querySelectorAll<HTMLFormElement>("[data-static-form]").forEach((form) => {
+    const submitButton = form.querySelector<HTMLButtonElement>("[data-static-submit]");
+    const status = form.querySelector<HTMLElement>("[data-form-status]");
+
+    submitButton?.addEventListener("click", () => {
+      if (!form.reportValidity()) return;
+      if (status) {
+        status.textContent =
+          "Este formulario todavía no está conectado. No se ha enviado ningún dato.";
+      }
+    });
+  });
+</script>
